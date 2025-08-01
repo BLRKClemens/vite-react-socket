@@ -9,14 +9,11 @@ function App() {
     socket.on("updateState", (newState) => {
       setState(newState);
     });
+
+    return () => socket.off("updateState");
   }, []);
 
-  return (
-    <>
-      <h1>{state?.name}</h1>
-      <h1>counter {state?.counter}</h1>
-    </>
-  );
+  return <div></div>;
 }
 
 export default App;
