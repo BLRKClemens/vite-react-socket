@@ -19,20 +19,24 @@ const io = new Server(server, {
 // Statischer Ordner für HTML-Dateien
 app.use(express.static(join(__dirname, "dist")));
 
-function initState() {
-  const state = {};
-  return state;
+function initData() {
+  const data = {};
+  return data;
 }
 
-const state = initState();
+const data = initData();
 
-function updateState() {
-  io.sockets.emit("updateState", state);
+function updateData() {
+  io.sockets.emit("updateData", data);
 }
 
 io.on("connection", (socket) => {
-  console.log("✅ Neue Verbindung:", socket.id);
-  updateState();
+  console.log("\n✅ Neue Verbindung:", socket.id, socket.handshake.address);
+  updateData();
+
+  socket.on("disconnect", () => {
+    console.log("❌ Verbindung getrennt:", socket.id, socket.handshake.address);
+  });
 });
 
 const PORT = process.env.PORT || 3000;

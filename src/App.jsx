@@ -1,19 +1,14 @@
-import { useEffect, useState } from "react";
 import { socket } from "./shared/socket";
 import { useSetupSocket } from "./shared/hooks/useSetupSocket";
+import { GenericContextProvider } from "./shared/context/genericContext";
 function App() {
-  const [state, setState] = useState({});
-
   useSetupSocket(socket);
-  useEffect(() => {
-    socket.on("updateState", (newState) => {
-      setState(newState);
-    });
 
-    return () => socket.off("updateState");
-  }, []);
-
-  return <div></div>;
+  return (
+    <GenericContextProvider socket={socket}>
+      <></>
+    </GenericContextProvider>
+  );
 }
 
 export default App;
