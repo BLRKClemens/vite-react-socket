@@ -10,6 +10,11 @@ const outDir = resolve(__dirname, "dist");
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   root,
+  resolve: {
+    alias: {
+      "@": root,
+    },
+  },
   build: {
     outDir,
     emptyOutDir: true,
